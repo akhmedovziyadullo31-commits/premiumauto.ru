@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Premium Auto Moscow</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:#F5F3EF;color:#1A1714;font-family:'Montserrat',sans-serif;font-weight:300;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}a{text-decoration:none;color:inherit}button{font-family:inherit;cursor:pointer;border:none;background:none}
+:root{--c0:#F5F3EF;--c1:#EDE9E1;--c2:#E3DDD3;--cb:#C5BDB0;--cm:#78726A;--cd:#1A1714;--ga:#9A7D4A;--gb:#B8965C}
+#intro{position:fixed;inset:0;z-index:9999;background:var(--cd);display:flex;align-items:center;justify-content:center;transition:opacity .9s,visibility .9s}
+#intro.gone{opacity:0;visibility:hidden;pointer-events:none}
+.i-wrap{display:flex;flex-direction:column;align-items:center;gap:20px;opacity:0;transform:translateY(18px);animation:iFade 1s ease .3s forwards}
+@keyframes iFade{to{opacity:1;transform:none}}
+.i-ring{width:96px;height:96px;border:1px solid rgba(154,125,74,.4);border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;color:var(--ga)}
+.i-ring::before{content:'';position:absolute;inset:9px;border:1px solid rgba(154,125,74,.15);border-radius:50%}
+.i-ring svg{width:50px;height:50px}
+.i-name{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300;letter-spacing:10px;text-transform:uppercase;color:#F5F3EF}
+.i-sub{font-size:8px;letter-spacing:6px;text-transform:uppercase;color:rgba(245,243,239,.3);margin-top:-14px}
+.i-line{width:1px;height:0;background:var(--ga);animation:iLine .9s ease 1.1s forwards}
+@keyframes iLine{to{height:56px}}
+#nav{position:fixed;top:0;left:0;right:0;z-index:500;height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 56px;background:rgba(245,243,239,.97);border-bottom:1px solid var(--cb);backdrop-filter:blur(20px);transition:box-shadow .4s}
+#nav.sc{box-shadow:0 2px 32px rgba(26,23,20,.08)}
+.nav-l{display:flex;align-items:center;gap:14px}
+.nav-badge{width:36px;height:36px;border:1px solid var(--ga);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--ga)}
+.nav-badge svg{width:17px;height:17px}
+.nav-t1{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:400;letter-spacing:3.5px;text-transform:uppercase;color:var(--cd);line-height:1}
+.nav-t2{font-size:7px;letter-spacing:3.5px;text-transform:uppercase;color:var(--cm)}
+.nav-links{display:flex;gap:36px;list-style:none}
+.nav-links a{font-size:8.5px;letter-spacing:2.5px;text-transform:uppercase;color:var(--cm);transition:color .2s}
+.nav-links a:hover{color:var(--cd)}
+.nav-cta{background:var(--cd);color:var(--c0);padding:10px 26px;font-size:8px;letter-spacing:2.5px;text-transform:uppercase;font-weight:400;transition:background .25s}
+.nav-cta:hover{background:var(--ga)}
+.nav-burger{display:none;flex-direction:column;gap:5px;padding:6px;cursor:pointer}
+.nav-burger span{width:22px;height:1px;background:var(--cd);display:block}
+.nav-drawer{display:none;position:fixed;top:72px;left:0;right:0;background:rgba(245,243,239,.98);border-bottom:1px solid var(--cb);z-index:499;flex-direction:column;padding:24px 28px;gap:0;backdrop-filter:blur(20px)}
+.nav-drawer.open{display:flex}
+.nav-drawer a{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--cm);padding:14px 0;border-bottom:1px solid rgba(197,189,176,.3)}
+.nav-drawer a:last-child{border-bottom:none}
+.nav-drawer .dcta{background:var(--cd);color:var(--c0);text-align:center;padding:14px;margin-top:12px;font-size:9px;letter-spacing:2.5px;border-bottom:none}
+.hero{height:100svh;min-height:600px;position:relative;display:flex;align-items:flex-end;overflow:hidden}
+.hero-bg{position:absolute;inset:0}
+.hero-bg img{width:100%;height:100%;object-fit:cover;transform:scale(1.06);animation:bgZ 16s ease forwards}
+@keyframes bgZ{to{transform:scale(1)}}
+.hero-ov{position:absolute;inset:0;background:linear-gradient(105deg,rgba(26,23,20,.9) 0%,rgba(26,23,20,.5) 50%,rgba(26,23,20,.1) 100%)}
+.hero-bot{position:absolute;bottom:0;left:0;right:0;height:45%;background:linear-gradient(to top,rgba(26,23,20,.65),transparent)}
+.hero-c{position:relative;z-index:2;padding:0 72px 88px;max-width:760px;opacity:0;transform:translateY(28px);animation:hIn 1s ease 2.3s forwards}
+@keyframes hIn{to{opacity:1;transform:none}}
+.hero-ey{display:flex;align-items:center;gap:16px;font-size:8px;letter-spacing:5px;text-transform:uppercase;color:rgba(245,243,239,.4);margin-bottom:28px}
+.hero-ey::before{content:'';width:40px;height:1px;background:var(--ga)}
+.hero-h1{font-family:'Cormorant Garamond',serif;font-size:clamp(52px,8vw,108px);font-weight:300;line-height:.9;color:#F5F3EF;letter-spacing:-2px;margin-bottom:36px}
+.hero-h1 em{font-style:italic;color:var(--gb)}
+.hero-p{font-size:13px;color:rgba(245,243,239,.58);line-height:1.9;max-width:480px;margin-bottom:48px}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap}
+.btn-s{background:#F5F3EF;color:var(--cd);padding:16px 44px;font-size:8.5px;letter-spacing:3px;text-transform:uppercase;font-weight:500;transition:all .25s;display:inline-block}
+.btn-s:hover{background:var(--ga);color:#F5F3EF}
+.btn-o{background:transparent;color:rgba(245,243,239,.7);padding:16px 44px;border:1px solid rgba(245,243,239,.22);font-size:8.5px;letter-spacing:3px;text-transform:uppercase;transition:all .25s;display:inline-block}
+.btn-o:hover{border-color:rgba(245,243,239,.6);color:#F5F3EF}
+.hero-scr{position:absolute;bottom:40px;right:60px;display:flex;flex-direction:column;align-items:center;gap:10px;font-size:7px;letter-spacing:3px;text-transform:uppercase;color:rgba(245,243,239,.28)}
+.hero-scrl{width:1px;height:48px;background:linear-gradient(var(--ga),transparent);animation:scrP 2.2s infinite}
+@keyframes scrP{0%,100%{opacity:.25}50%{opacity:.9}}
+.ticker{background:var(--cd);height:44px;overflow:hidden;display:flex;align-items:center;border-bottom:1px solid rgba(255,255,255,.06)}
+.ticker-t{display:flex;white-space:nowrap;animation:tick 28s linear infinite}
+.ticker-t:hover{animation-play-state:paused}
+@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.ti{display:inline-flex;align-items:center;gap:12px;padding:0 28px;font-size:8.5px;letter-spacing:1.5px;color:rgba(245,243,239,.35)}
+.ti strong{color:rgba(245,243,239,.7);font-weight:400}
+.ti a{color:rgba(245,243,239,.5)}.ti a:hover{color:#F5F3EF}
+.tdot{width:3px;height:3px;border-radius:50%;background:var(--ga);flex-shrink:0}
+.nums{display:grid;grid-template-columns:repeat(4,1fr);background:var(--c1);border-bottom:1px solid var(--cb)}
+.num{padding:44px 40px;border-right:1px solid var(--cb);transition:background .3s}
+.num:last-child{border-right:none}.num:hover{background:var(--c2)}
+.num-v{font-family:'Cormorant Garamond',serif;font-size:58px;font-weight:300;color:var(--cd);line-height:1;margin-bottom:8px}
+.num-k{font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--cm)}
+.stmt{background:var(--c0);padding:96px 72px;display:grid;grid-template-columns:5fr 7fr;gap:80px;align-items:center;border-bottom:1px solid var(--cb)}
+.ey{font-size:8px;letter-spacing:5px;text-transform:uppercase;color:var(--ga);margin-bottom:22px;display:flex;align-items:center;gap:14px}
+.ey::before{content:'';width:32px;height:1px;background:var(--ga)}
+.stmt-h{font-family:'Cormorant Garamond',serif;font-size:clamp(38px,5vw,68px);font-weight:300;line-height:1.02;color:var(--cd)}
+.stmt-h em{font-style:italic;color:var(--ga)}
+.stmt-p{font-size:13.5px;color:var(--cm);line-height:1.95;margin-bottom:24px;font-weight:300}
+.stmt-p:last-child{margin-bottom:0}.stmt-p strong{color:var(--cd);font-weight:400}
+.brands-sec{background:#E5E2DC;border-top:1px solid var(--cb);border-bottom:1px solid var(--cb)}
+.brands-wrap{display:flex;align-items:center}
+.br-track{flex:1;min-width:0;display:flex;align-items:center;overflow-x:auto;scroll-behavior:smooth;scrollbar-width:none;-ms-overflow-style:none;padding:28px 48px;gap:40px}
+.br-track::-webkit-scrollbar{display:none}
+.br-item{flex-shrink:0;display:flex;align-items:center;justify-content:center;height:64px}
+.br-item svg{max-height:52px;width:auto;color:#4a4540;transition:color .25s}
+.br-item:hover svg{color:#1A1714}
+.br-arrows{flex-shrink:0;display:flex;align-items:center;gap:2px;padding:0 28px 0 12px}
+.br-arr{width:40px;height:40px;background:transparent;border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#6a6460;transition:color .2s}
+.br-arr:hover{color:#1A1714}
+.br-arr svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.sec{padding:96px 64px}.sec-c0{background:var(--c0)}.sec-c1{background:var(--c1)}
+.sh{margin-bottom:64px}
+.sec-ey{font-size:8px;letter-spacing:5px;text-transform:uppercase;color:var(--ga);margin-bottom:20px;display:flex;align-items:center;gap:14px}
+.sec-ey::before{content:'';width:32px;height:1px;background:var(--ga)}
+.sec-t{font-family:'Cormorant Garamond',serif;font-size:clamp(34px,4.5vw,58px);font-weight:300;color:var(--cd);line-height:1.05}
+.sec-t em{font-style:italic;color:var(--ga)}
+.cars{display:flex;flex-direction:column;gap:2px}
+.car{background:#fff;display:flex;border:1px solid var(--cb);transition:transform .45s cubic-bezier(.16,1,.3,1),box-shadow .45s;overflow:hidden}
+.car:hover{transform:translateY(-4px);box-shadow:0 24px 64px rgba(26,23,20,.11)}
+.car-gal{position:relative;width:52%;flex-shrink:0;overflow:hidden;background:var(--c2)}
+.car-main{width:100%;height:100%;min-height:460px;object-fit:cover;cursor:pointer;transition:transform .8s cubic-bezier(.16,1,.3,1)}
+.car:hover .car-main{transform:scale(1.05)}
+.car-thumbs{position:absolute;bottom:0;left:0;right:0;display:flex;gap:2px;padding:2px;background:rgba(26,23,20,.65)}
+.th{flex:1;height:52px;overflow:hidden;cursor:pointer;opacity:.42;transition:opacity .25s;border:1px solid transparent}
+.th:hover,.th.act{opacity:1;border-color:var(--ga)}
+.th img{width:100%;height:100%;object-fit:cover;display:block}
+.th-more{flex:0 0 52px;height:52px;background:rgba(26,23,20,.72);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:10px;color:rgba(245,243,239,.45);border:1px solid rgba(255,255,255,.07);transition:color .2s}
+.th-more:hover{color:#F5F3EF}
+.car-body{padding:44px 52px;display:flex;flex-direction:column;justify-content:space-between;flex:1}
+.car-bgs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+.cbg{font-size:7px;letter-spacing:2.5px;text-transform:uppercase;padding:5px 13px;border:1px solid var(--cb);color:var(--cm);background:var(--c1)}
+.cbg-hot{background:var(--cd);border-color:var(--cd);color:var(--c0)}
+.car-brand{font-size:8px;letter-spacing:5px;text-transform:uppercase;color:var(--ga);margin-bottom:10px}
+.car-name{font-family:'Cormorant Garamond',serif;font-size:35px;font-weight:300;color:var(--cd);line-height:1.02;margin-bottom:5px}
+.car-sub{font-size:10px;color:var(--cm);margin-bottom:32px}
+.car-specs{display:flex;border-top:1px solid var(--cb);border-bottom:1px solid var(--cb);margin-bottom:28px}
+.sp{flex:1;padding:15px 0;text-align:center;border-right:1px solid var(--cb)}
+.sp:last-child{border-right:none}
+.spv{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--cd);font-weight:400}
+.spk{font-size:7px;letter-spacing:2.5px;text-transform:uppercase;color:var(--cm);margin-top:4px}
+.car-det{margin-bottom:28px}
+.dr{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid rgba(197,189,176,.35)}
+.dk2{font-size:10.5px;color:var(--cm)}.dv{font-size:10.5px;color:var(--cd)}
+.car-foot{display:flex;justify-content:space-between;align-items:flex-end;padding-top:26px;border-top:1px solid var(--cb);margin-top:auto}
+.car-pr{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;color:var(--cd)}
+.car-pr span{font-size:17px;font-family:'Montserrat',sans-serif;color:var(--cm);font-weight:300}
+.car-pn{font-size:9px;color:var(--cm);margin-top:5px}
+.btn-buy{background:var(--cd);color:var(--c0);padding:15px 42px;font-size:8.5px;letter-spacing:3px;text-transform:uppercase;font-weight:400;transition:background .25s;display:inline-block}
+.btn-buy:hover{background:var(--ga)}
+.why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--cb);margin-top:64px}
+.wc{background:var(--c0);padding:52px 48px;border-top:2px solid transparent;transition:border-top-color .35s,background .35s}
+.wc:hover{border-top-color:var(--ga);background:var(--c1)}
+.wn{font-family:'Cormorant Garamond',serif;font-size:60px;font-weight:300;color:var(--cb);line-height:1;margin-bottom:22px}
+.wt{font-family:'Cormorant Garamond',serif;font-size:25px;font-weight:400;color:var(--cd);margin-bottom:14px}
+.wp{font-size:12.5px;line-height:2;color:var(--cm);font-weight:300}
+.order-sec{background:var(--cd);padding:88px 72px;display:grid;grid-template-columns:1fr auto;gap:80px;align-items:center}
+.ob-ey{font-size:8px;letter-spacing:5px;text-transform:uppercase;color:var(--ga);margin-bottom:22px;display:flex;align-items:center;gap:14px}
+.ob-ey::before{content:'';width:32px;height:1px;background:var(--ga)}
+.ob-h{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,4.5vw,60px);font-weight:300;color:#F5F3EF;line-height:1.05;margin-bottom:22px}
+.ob-h em{font-style:italic;color:var(--gb)}
+.ob-p{font-size:13.5px;color:rgba(245,243,239,.5);line-height:1.85;max-width:520px;font-weight:300}
+.ob-r{display:flex;flex-direction:column;align-items:flex-end}
+.ob-pts{display:flex;flex-direction:column;gap:13px;margin-bottom:34px}
+.ob-pt{display:flex;align-items:center;gap:14px;font-size:11.5px;color:rgba(245,243,239,.45);white-space:nowrap}
+.ob-dash{width:20px;height:1px;background:var(--ga);flex-shrink:0}
+.btn-g{background:var(--ga);color:#F5F3EF;padding:18px 50px;font-size:8.5px;letter-spacing:3px;text-transform:uppercase;font-weight:400;transition:background .25s;display:inline-block}
+.btn-g:hover{background:var(--gb)}
+.soc-bar{background:var(--c1);padding:56px 72px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--cb);border-bottom:1px solid var(--cb);gap:40px;flex-wrap:wrap}
+.soc-ey{font-size:8px;letter-spacing:4px;text-transform:uppercase;color:var(--ga);margin-bottom:10px}
+.soc-t{font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:300;color:var(--cd)}
+.soc-btns{display:flex;gap:10px;flex-wrap:wrap}
+.soc-btn{display:flex;align-items:center;gap:9px;padding:13px 28px;border:1px solid var(--cb);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--cm);transition:all .25s}
+.soc-btn:hover{border-color:var(--cd);color:var(--cd)}
+.soc-btn-m{background:var(--cd);color:var(--c0);border-color:var(--cd);font-weight:500}
+.soc-btn-m:hover{background:var(--ga);border-color:var(--ga)}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:88px;align-items:start;margin-top:64px}
+.c-lbl{font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--ga);display:block;margin-bottom:11px}
+.c-val{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;color:var(--cd)}
+.c-val a{color:var(--cd);transition:color .2s}.c-val a:hover{color:var(--ga)}
+.c-hrs{font-size:12px;color:var(--cm);line-height:2.2;font-weight:300;margin-top:8px}
+.fg{margin-bottom:20px}
+.fg label{display:block;font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--cm);margin-bottom:10px}
+.fg input,.fg select,.fg textarea{width:100%;background:var(--c1);border:1px solid var(--cb);color:var(--cd);padding:14px 16px;font-family:'Montserrat',sans-serif;font-size:13px;font-weight:300;outline:none;transition:border-color .3s;appearance:none}
+.fg input::placeholder,.fg textarea::placeholder{color:var(--cb)}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--ga)}
+.fg textarea{height:106px;resize:none}
+.fg-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.btn-sub{width:100%;background:var(--cd);color:var(--c0);padding:17px;font-family:'Montserrat',sans-serif;font-size:8.5px;letter-spacing:3px;text-transform:uppercase;font-weight:400;transition:background .25s;border:none;cursor:pointer}
+.btn-sub:hover{background:var(--ga)}
+.f-note{font-size:9px;color:var(--cm);margin-top:10px;line-height:1.8}
+footer{background:#131110;padding:68px 64px 44px;border-top:1px solid rgba(255,255,255,.04)}
+.ft-grid{display:grid;grid-template-columns:2.2fr 1fr 1fr 1fr;gap:48px;margin-bottom:52px}
+.ft-badge{width:46px;height:46px;border:1px solid rgba(154,125,74,.3);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--ga);margin-bottom:14px}
+.ft-badge svg{width:22px;height:22px}
+.ft-name{font-family:'Cormorant Garamond',serif;font-size:21px;font-weight:300;letter-spacing:4px;text-transform:uppercase;color:#F5F3EF}
+.ft-sub{font-size:7px;letter-spacing:3.5px;text-transform:uppercase;color:rgba(245,243,239,.25)}
+.ft-desc{font-size:11px;color:rgba(245,243,239,.28);line-height:1.95;max-width:250px;font-weight:300;margin-top:12px}
+.ft-h{font-size:8px;letter-spacing:3.5px;text-transform:uppercase;color:var(--ga);margin-bottom:20px}
+.ft-ul{list-style:none;display:flex;flex-direction:column;gap:11px}
+.ft-ul a{font-size:11.5px;color:rgba(245,243,239,.28);transition:color .2s;font-weight:300}
+.ft-ul a:hover{color:rgba(245,243,239,.7)}
+.ft-bot{display:flex;justify-content:space-between;align-items:center;padding-top:28px;border-top:1px solid rgba(255,255,255,.04);font-size:9px;color:rgba(245,243,239,.18);letter-spacing:.5px}
+.lb{display:none;position:fixed;inset:0;z-index:900;background:rgba(26,23,20,.97);flex-direction:column;align-items:center;justify-content:center}
+.lb.open{display:flex}
+.lb-img{max-width:88vw;max-height:76vh;object-fit:contain}
+.lb-thumbs{display:flex;gap:5px;margin-top:14px;max-width:88vw;overflow-x:auto;padding-bottom:4px}
+.lb-th{width:58px;height:42px;object-fit:cover;cursor:pointer;opacity:.28;transition:opacity .2s;flex-shrink:0}
+.lb-th.act,.lb-th:hover{opacity:1}
+.lb-x{position:absolute;top:28px;right:36px;font-size:8.5px;letter-spacing:3.5px;text-transform:uppercase;color:rgba(245,243,239,.35);cursor:pointer;transition:color .2s}
+.lb-x:hover{color:#F5F3EF}
+.lb-p,.lb-n{position:absolute;top:50%;transform:translateY(-50%);color:rgba(245,243,239,.28);font-size:44px;cursor:pointer;padding:20px;transition:color .2s}
+.lb-p{left:8px}.lb-n{right:8px}
+.lb-p:hover,.lb-n:hover{color:#F5F3EF}
+.lb-cnt{position:absolute;top:28px;left:50%;transform:translateX(-50%);font-size:9px;letter-spacing:3px;color:rgba(245,243,239,.28)}
+.rv{opacity:0;transform:translateY(28px);transition:opacity .75s ease,transform .75s ease}
+.rv.vis{opacity:1;transform:none}
+@media(max-width:1100px){#nav{padding:0 32px}.hero-c{padding:0 40px 80px}.stmt{grid-template-columns:1fr;gap:48px;padding:80px 44px}.sec{padding:80px 36px}.order-sec{grid-template-columns:1fr;gap:52px;padding:72px 44px}.ob-r{align-items:flex-start}.soc-bar{padding:52px 44px}.ft-grid{grid-template-columns:1fr 1fr;gap:40px}footer{padding:52px 36px 36px}.contact-grid{grid-template-columns:1fr;gap:52px}}
+@media(max-width:768px){#nav{padding:0 20px;height:60px}.nav-links,.nav-cta{display:none}.nav-burger{display:flex}.nav-t1{font-size:15px}.nav-drawer{top:60px}.hero-c{padding:0 24px 72px;max-width:100%}.hero-h1{font-size:clamp(44px,11vw,68px);letter-spacing:-1px}.hero-p{font-size:12px;margin-bottom:36px}.hero-scr{display:none}.hero-btns{flex-direction:column;gap:10px}.btn-s,.btn-o{padding:14px 32px;text-align:center}.ticker{height:40px}.nums{grid-template-columns:1fr 1fr}.num:nth-child(2){border-right:none}.num{padding:28px 20px}.num-v{font-size:44px}.stmt{grid-template-columns:1fr;gap:36px;padding:64px 24px}.br-track{padding:20px 24px;gap:28px}.br-item{height:48px}.br-item svg{max-height:40px}.br-arrows{padding:0 16px 0 8px}.br-arr{width:32px;height:32px}.sec{padding:56px 20px}.car{flex-direction:column}.car-gal{width:100%}.car-main{min-height:260px}.car-body{padding:28px 22px}.car-name{font-size:26px}.car-pr{font-size:32px}.car-specs{flex-wrap:wrap}.sp{min-width:33.3%}.why-grid{grid-template-columns:1fr}.wc{padding:36px 28px}.order-sec{grid-template-columns:1fr;gap:44px;padding:56px 24px}.ob-r{align-items:flex-start}.soc-bar{padding:40px 24px;flex-direction:column;align-items:flex-start;gap:24px}.soc-btns{flex-direction:column;width:100%}.soc-btn{justify-content:center}.contact-grid{gap:44px}.ft-grid{grid-template-columns:1fr}footer{padding:44px 20px 32px}.ft-bot{flex-direction:column;gap:8px;text-align:center}.lb-p,.lb-n{padding:10px;font-size:36px}}
+@media(max-width:480px){.hero-h1{font-size:clamp(36px,10vw,52px)}.stmt-h{font-size:34px}.sec-t{font-size:28px}.soc-t{font-size:26px}.ob-pt{font-size:10px;white-space:normal}.ft-name{font-size:18px}}
+</style>
+</head>
+<body>
+
+<div id="intro">
+  <div class="i-wrap">
+    <div class="i-ring"><svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="7" stroke="currentColor" stroke-width="1" fill="none"/><circle cx="24" cy="24" r="2" fill="currentColor"/><line x1="24" y1="2" x2="24" y2="17" stroke="currentColor" stroke-width=".9"/><line x1="38" y1="10" x2="29" y2="19" stroke="currentColor" stroke-width=".9"/><line x1="46" y1="24" x2="31" y2="24" stroke="currentColor" stroke-width=".9"/><line x1="38" y1="38" x2="29" y2="29" stroke="currentColor" stroke-width=".9"/><line x1="24" y1="46" x2="24" y2="31" stroke="currentColor" stroke-width=".9"/><line x1="10" y1="38" x2="19" y2="29" stroke="currentColor" stroke-width=".9"/><line x1="2" y1="24" x2="17" y2="24" stroke="currentColor" stroke-width=".9"/><line x1="10" y1="10" x2="19" y2="19" stroke="currentColor" stroke-width=".9"/><circle cx="24" cy="2" r="1.2" fill="currentColor" opacity=".5"/><circle cx="38" cy="10" r="1.2" fill="currentColor" opacity=".5"/><circle cx="46" cy="24" r="1.2" fill="currentColor" opacity=".5"/><circle cx="38" cy="38" r="1.2" fill="currentColor" opacity=".5"/><circle cx="24" cy="46" r="1.2" fill="currentColor" opacity=".5"/><circle cx="10" cy="38" r="1.2" fill="currentColor" opacity=".5"/><circle cx="2" cy="24" r="1.2" fill="currentColor" opacity=".5"/><circle cx="10" cy="10" r="1.2" fill="currentColor" opacity=".5"/></svg></div>
+    <div class="i-name">Premium Auto</div>
+    <div class="i-sub">Moscow</div>
+    <div class="i-line"></div>
+  </div>
+</div>
+
+<nav id="nav">
+  <div class="nav-l">
+    <div class="nav-badge"><svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="7" stroke="currentColor" stroke-width="1" fill="none"/><circle cx="24" cy="24" r="2" fill="currentColor"/><line x1="24" y1="2" x2="24" y2="17" stroke="currentColor" stroke-width=".9"/><line x1="38" y1="10" x2="29" y2="19" stroke="currentColor" stroke-width=".9"/><line x1="46" y1="24" x2="31" y2="24" stroke="currentColor" stroke-width=".9"/><line x1="38" y1="38" x2="29" y2="29" stroke="currentColor" stroke-width=".9"/><line x1="24" y1="46" x2="24" y2="31" stroke="currentColor" stroke-width=".9"/><line x1="10" y1="38" x2="19" y2="29" stroke="currentColor" stroke-width=".9"/><line x1="2" y1="24" x2="17" y2="24" stroke="currentColor" stroke-width=".9"/><line x1="10" y1="10" x2="19" y2="19" stroke="currentColor" stroke-width=".9"/><circle cx="24" cy="2" r="1.2" fill="currentColor" opacity=".5"/><circle cx="38" cy="10" r="1.2" fill="currentColor" opacity=".5"/><circle cx="46" cy="24" r="1.2" fill="currentColor" opacity=".5"/><circle cx="38" cy="38" r="1.2" fill="currentColor" opacity=".5"/><circle cx="24" cy="46" r="1.2" fill="currentColor" opacity=".5"/><circle cx="10" cy="38" r="1.2" fill="currentColor" opacity=".5"/><circle cx="2" cy="24" r="1.2" fill="currentColor" opacity=".5"/><circle cx="10" cy="10" r="1.2" fill="currentColor" opacity=".5"/></svg></div>
+    <div><div class="nav-t1">Premium Auto</div><div class="nav-t2">Moscow</div></div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#catalog">Каталог</a></li>
+    <li><a href="#brands">Марки</a></li>
+    <li><a href="#why">О нас</a></li>
+    <li><a href="#order">Под заказ</a></li>
+    <li><a href="#contact">Контакты</a></li>
+  </ul>
+  <a href="https://wa.me/79261111170" class="nav-cta">WhatsApp</a>
+  <button class="nav-burger" onclick="toggleMenu()" aria-label="Меню">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="nav-drawer" id="navDrawer">
+  <a href="#catalog" onclick="toggleMenu()">Каталог</a>
+  <a href="#brands" onclick="toggleMenu()">Марки</a>
+  <a href="#why" onclick="toggleMenu()">О нас</a>
+  <a href="#order" onclick="toggleMenu()">Под заказ</a>
+  <a href="#contact" onclick="toggleMenu()">Контакты</a>
+  <a href="https://wa.me/79261111170" class="dcta" onclick="toggleMenu()">WhatsApp</a>
+</div>
+
+<section class="hero">
+  <div class="hero-bg"><img src="imgs/glc2_1.jpg" alt="Premium Auto Moscow" loading="eager"></div>
+  <div class="hero-ov"></div><div class="hero-bot"></div>
+  <div class="hero-c">
+    <div class="hero-ey">Москва · ул. Василисы Кожиной, 13</div>
+    <h1 class="hero-h1">Премиальные<br>автомобили<br><em>из Кореи</em></h1>
+    <p class="hero-p">Привозим оригинальные автомобили напрямую из Кореи и Европы. Mercedes-Benz, Porsche, Lamborghini, Ferrari — без посредников, с документами и юридическим сопровождением.</p>
+    <div class="hero-btns">
+      <a href="#catalog" class="btn-s">Смотреть в наличии</a>
+      <a href="https://wa.me/79261111170" class="btn-o">WhatsApp</a>
+    </div>
+  </div>
+  <div class="hero-scr"><div class="hero-scrl"></div><span>Листать</span></div>
+</section>
+
+<div class="ticker">
+  <div class="ticker-t">
+    <span class="ti"><span class="tdot"></span>Привозим из <strong>Южной Кореи</strong></span>
+    <span class="ti"><span class="tdot"></span>Электронный ПТС · <strong>0–1 владелец</strong></span>
+    <span class="ti"><span class="tdot"></span>Спорткары и <strong>суперкары под заказ</strong></span>
+    <span class="ti"><span class="tdot"></span><a href="tel:+79261111170"><strong>+7 (926) 111-11-70</strong></a></span>
+    <span class="ti"><span class="tdot"></span><a href="https://www.instagram.com/premium_auto.ru" target="_blank">Instagram</a></span>
+    <span class="ti"><span class="tdot"></span><a href="https://t.me/premium_auto1" target="_blank">Telegram</a></span>
+    <span class="ti"><span class="tdot"></span>Таможенное оформление <strong>под ключ</strong></span>
+    <span class="ti"><span class="tdot"></span>Доставка <strong>по всей России</strong></span>
+    <span class="ti"><span class="tdot"></span>Привозим из <strong>Южной Кореи</strong></span>
+    <span class="ti"><span class="tdot"></span>Электронный ПТС · <strong>0–1 владелец</strong></span>
+    <span class="ti"><span class="tdot"></span>Спорткары и <strong>суперкары под заказ</strong></span>
+    <span class="ti"><span class="tdot"></span><a href="tel:+79261111170"><strong>+7 (926) 111-11-70</strong></a></span>
+    <span class="ti"><span class="tdot"></span><a href="https://www.instagram.com/premium_auto.ru" target="_blank">Instagram</a></span>
+    <span class="ti"><span class="tdot"></span><a href="https://t.me/premium_auto1" target="_blank">Telegram</a></span>
+    <span class="ti"><span class="tdot"></span>Таможенное оформление <strong>под ключ</strong></span>
+    <span class="ti"><span class="tdot"></span>Доставка <strong>по всей России</strong></span>
+  </div>
+</div>
+
+<div class="nums">
+  <div class="num rv"><div class="num-v">4</div><div class="num-k">Авто в наличии</div></div>
+  <div class="num rv"><div class="num-v">15+</div><div class="num-k">Сделок закрыто</div></div>
+  <div class="num rv"><div class="num-v">100%</div><div class="num-k">Довольных клиентов</div></div>
+  <div class="num rv"><div class="num-v">24/7</div><div class="num-k">На связи</div></div>
+</div>
+
+<section class="stmt">
+  <div>
+    <div class="ey">Premium Auto Moscow</div>
+    <h2 class="stmt-h">Ваш путь<br>к <em>совершенству</em></h2>
+  </div>
+  <div>
+    <p class="stmt-p">Мы специализируемся на поставке премиальных и спортивных автомобилей с официального корейского рынка. <strong>Mercedes-Benz, BMW, Porsche, Lamborghini, Ferrari, Audi, Cadillac</strong> — оригиналы без пробега по России.</p>
+    <p class="stmt-p">Каждый автомобиль проходит полную юридическую проверку. Цена финальная — без скрытых платежей. Таможенное оформление и доставка под ключ.</p>
+  </div>
+</section>
+
+<section class="brands-sec" id="brands">
+  <div class="brands-wrap">
+    <div class="br-track" id="brTrack">
+      <div class="br-item"><svg viewBox="0 0 70 70" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="35" cy="35" r="32" stroke="currentColor" stroke-width="2.2" fill="none"/><circle cx="35" cy="35" r="24" stroke="currentColor" stroke-width=".7" fill="none" opacity=".35"/><text x="35" y="43" text-anchor="middle" font-size="24" font-family="Georgia,serif" fill="currentColor" font-weight="700">B</text></svg></div>
+<div class="br-item"><svg viewBox="0 0 60 72" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 14 L10 58" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M10 14 L32 14 C44 14 50 20 50 28 C50 36 44 42 32 42 L10 42" stroke="currentColor" stroke-width="4" stroke-linecap="round" fill="none"/><path d="M29 42 L50 58" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></svg></div>
+<div class="br-item"><svg viewBox="0 0 160 54" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M68 27 C56 21 40 15 24 13 C13 12 3 16 0 23 C9 23 20 26 26 33 C38 29 53 27 68 27 Z" stroke="currentColor" stroke-width="1.7" fill="none"/><path d="M68 27 C54 19 37 12 20 10 C8 9 0 14 0 20 C10 20 22 23 27 29 C39 27 54 25 68 27 Z" stroke="currentColor" stroke-width=".8" fill="none" opacity=".45"/><path d="M92 27 C104 21 120 15 136 13 C147 12 157 16 160 23 C151 23 140 26 134 33 C122 29 107 27 92 27 Z" stroke="currentColor" stroke-width="1.7" fill="none"/><path d="M92 27 C106 19 123 12 140 10 C152 9 160 14 160 20 C150 20 138 23 133 29 C121 27 106 25 92 27 Z" stroke="currentColor" stroke-width=".8" fill="none" opacity=".45"/><circle cx="80" cy="27" r="16" stroke="currentColor" stroke-width="1.8" fill="none"/><text x="80" y="32" text-anchor="middle" font-size="14" font-family="Georgia,serif" fill="currentColor" font-weight="700">B</text></svg></div>
+<div class="br-item"><svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="40" cy="40" r="37" stroke="currentColor" stroke-width="2.2" fill="none"/><circle cx="40" cy="40" r="29" stroke="currentColor" stroke-width=".7" fill="none" opacity=".35"/><path d="M40 11 L43 36 Q41.5 39 40 40 Q38.5 39 37 36 Z" fill="currentColor"/><path d="M40 40 Q43 39 45 37 L65 60 L58 55 Z" fill="currentColor"/><path d="M40 40 Q37 39 35 37 L15 60 L22 55 Z" fill="currentColor"/><circle cx="40" cy="40" r="4.5" fill="currentColor"/></svg></div>
+<div class="br-item"><svg viewBox="0 0 72 88" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4 L68 4 L68 62 Q68 84 36 84 Q4 84 4 62 Z" stroke="currentColor" stroke-width="2" fill="none"/><path d="M36 16 C29 16 21 20 18 26 C15 30 17 35 19 37 C16 39 14 43 16 47 C18 51 22 53 22 53 L22 67 L36 60 L50 67 L50 53 C54 51 58 47 56 43 C54 39 52 37 53 35 C55 31 57 28 54 26 C51 20 43 16 36 16 Z" fill="currentColor" opacity=".72"/><path d="M22 18 C18 12 10 9 7 12" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M50 18 C54 12 62 9 65 12" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg></div>
+<div class="br-item"><svg viewBox="0 0 60 80" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M30 7 C28 9 22 16 20 23 C19 27 20 31 22 34 C18 36 16 41 18 46 C19 49 22 51 24 50 C24 55 24 62 26 67 C27 71 29 74 30 76 C31 74 33 71 34 67 C36 62 36 55 36 50 C38 51 41 49 42 46 C44 41 42 36 38 34 C40 31 41 27 40 23 C38 16 32 9 30 7 Z" fill="currentColor" opacity=".78"/><path d="M24 50 C20 57 15 66 12 73" stroke="currentColor" stroke-width="3" stroke-linecap="round" fill="none"/><path d="M36 50 C40 57 45 66 48 73" stroke="currentColor" stroke-width="3" stroke-linecap="round" fill="none"/></svg></div>
+<div class="br-item"><svg viewBox="0 0 130 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="2" width="126" height="44" rx="22" fill="currentColor"/><text x="65" y="21" text-anchor="middle" font-size="8.5" font-family="Arial,sans-serif" fill="white" font-weight="800" letter-spacing="3">LAND</text><text x="65" y="35" text-anchor="middle" font-size="8.5" font-family="Arial,sans-serif" fill="white" font-weight="800" letter-spacing="3">ROVER</text></svg></div>
+<div class="br-item"><svg viewBox="0 0 72 92" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 3 L69 3 L69 66 Q69 89 36 89 Q3 89 3 66 Z" stroke="currentColor" stroke-width="2" fill="none"/><line x1="3" y1="46" x2="69" y2="46" stroke="currentColor" stroke-width="1.5"/><line x1="36" y1="3" x2="36" y2="89" stroke="currentColor" stroke-width="1.5"/><circle cx="36" cy="25" r="11" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M30 19 L36 11 L42 19" stroke="currentColor" stroke-width="1.5" fill="none"/><line x1="36" y1="11" x2="36" y2="25" stroke="currentColor" stroke-width="1.5"/><rect x="42" y="50" width="7" height="30" fill="currentColor" opacity=".45"/><rect x="51" y="50" width="7" height="30" fill="currentColor" opacity=".28"/><rect x="60" y="50" width="6" height="30" fill="currentColor" opacity=".45"/></svg></div>
+<div class="br-item"><svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="40" cy="40" r="37" stroke="currentColor" stroke-width="2.2" fill="none"/><circle cx="40" cy="40" r="28" stroke="currentColor" stroke-width="2" fill="none"/><path d="M40 12 A28 28 0 0 1 68 40 L40 40 Z" fill="currentColor" opacity=".55"/><path d="M40 40 A28 28 0 0 1 12 68 L40 40 Z" fill="currentColor" opacity=".55"/><line x1="40" y1="12" x2="40" y2="68" stroke="currentColor" stroke-width="2"/><line x1="12" y1="40" x2="68" y2="40" stroke="currentColor" stroke-width="2"/><circle cx="40" cy="40" r="28" stroke="currentColor" stroke-width="2" fill="none"/></svg></div>
+    </div>
+    <div class="br-arrows">
+      <button class="br-arr" onclick="brScroll(-1)"><svg viewBox="0 0 20 20"><polyline points="13,4 6,10 13,16"/></svg></button>
+      <button class="br-arr" onclick="brScroll(1)"><svg viewBox="0 0 20 20"><polyline points="7,4 14,10 7,16"/></svg></button>
+    </div>
+  </div>
+</section>
+
+<section class="sec sec-c1" id="catalog">
+  <div class="sh"><div class="sec-ey">Автомобили в наличии</div><h2 class="sec-t">Доступны <em>прямо сейчас</em></h2></div>
+  <div class="cars">
+
+    <div class="car rv">
+      <div class="car-gal"><img class="car-main" src="imgs/glc_0.jpg" id="glcMain" onclick="lb('glc',0)" alt="GLC 43 AMG" loading="lazy"><div class="car-thumbs"><div class="th act" onclick="sw('glc',0,this)"><img src="imgs/glc_0.jpg" loading="lazy"></div>
+<div class="th" onclick="sw('glc',1,this)"><img src="imgs/glc_1.jpg" loading="lazy"></div>
+<div class="th" onclick="sw('glc',2,this)"><img src="imgs/glc_2.jpg" loading="lazy"></div>
+<div class="th" onclick="sw('glc',3,this)"><img src="imgs/glc_3.jpg" loading="lazy"></div>
+<div class="th" onclick="sw('glc',4,this)"><img src="imgs/glc_4.jpg" loading="lazy"></div>
+<div class="th-more" onclick="lb('glc',5)">+3</div></div></div>
+      <div class="car-body"><div>
+        <div class="car-bgs"><span class="cbg cbg-hot">В наличии</span><span class="cbg">2025 · 1 км</span><span class="cbg">AMG Performance</span><span class="cbg">Из Кореи</span></div>
+        <div class="car-brand">Mercedes-Benz</div><div class="car-name">GLC 43 AMG 4MATIC</div>
+        <div class="car-sub">X254 · Полный привод · AMG Performance · Электронный ПТС</div>
+        <div class="car-specs"><div class="sp"><div class="spv">421</div><div class="spk">Л.с.</div></div><div class="sp"><div class="spv">3.0л</div><div class="spk">Двиг.</div></div><div class="sp"><div class="spv">4.8с</div><div class="spk">0–100</div></div><div class="sp"><div class="spv">9G-AT</div><div class="spk">КПП</div></div><div class="sp"><div class="spv">4WD</div><div class="spk">Привод</div></div></div>
+        <div class="car-det"><div class="dr"><span class="dk2">Поколение</span><span class="dv">X254 (2022–н.в.)</span></div><div class="dr"><span class="dk2">Кузов</span><span class="dv">Внедорожник, 5 дверей, 5 мест</span></div><div class="dr"><span class="dk2">Интерьер</span><span class="dv">AMG Performance, красная кожа, карбон</span></div><div class="dr"><span class="dk2">Экран</span><span class="dv">MBUX 11.9" + приборная панель 12.3"</span></div><div class="dr"><span class="dk2">Состояние</span><span class="dv">Не битый · 0 владельцев</span></div></div>
+      </div><div class="car-foot"><div><div class="car-pr">10 450 000 <span>₽</span></div><div class="car-pn">Включая все расходы по ввозу в РФ</div></div><a href="#contact" class="btn-buy">Купить</a></div></div>
+    </div>
+
+    <div class="car rv">
+      <div class="car-gal"><img class="car-main" src="imgs/esc_0.jpg" id="escMain" onclick="lb('esc',0)" alt="Escalade" loading="lazy"><div class="car-thumbs"><div class="th act" onclick="sw('esc',0,this)"><img src="imgs/esc_0.jpg" loading="lazy"></div>
+<div class="th" onclick="sw('esc',1,this)"><img src="imgs/esc_1.jpg" loading="lazy"></div>
+<div class="th" onclick="sw('esc',2,this)"><img src="imgs/esc_2.jpg" loading="lazy"></div>
+<div class="th" onclick="sw('esc',3,this)"><img src="imgs/esc_3.jpg" loading="lazy"></div>
+<div class="th" onclick="sw('esc',4,this)"><img src="imgs/esc_4.jpg" loading="lazy"></div>
+<div class="th-more" onclick="lb('esc',5)">+15</div></div></div>
+      <div class="car-body"><div>
+        <div class="car-bgs"><span class="cbg cbg-hot">В наличии</span><span class="cbg">2026 · 1 км</span><span class="cbg">Sport Platinum</span><span class="cbg">Из Кореи</span></div>
+        <div class="car-brand">Cadillac</div><div class="car-name">Escalade 600 Sport Platinum</div>
+        <div class="car-sub">GMT 1XX рестайлинг · 4WD · Чёрный · Электронный ПТС</div>
+        <div class="car-specs"><div class="sp"><div class="spv">420</div><div class="spk">Л.с.</div></div><div class="sp"><div class="spv">6.2л</div><div class="spk">Двиг.</div></div><div class="sp"><div class="spv">V8</div><div class="spk">Цил.</div></div><div class="sp"><div class="spv">AT</div><div class="spk">КПП</div></div><div class="sp"><div class="spv">4WD</div><div class="spk">Привод</div></div></div>
+        <div class="car-det"><div class="dr"><span class="dk2">Поколение</span><span class="dv">GMT 1XX (2024–2026)</span></div><div class="dr"><span class="dk2">Кузов</span><span class="dv">Внедорожник, 5 дверей, 7 мест</span></div><div class="dr"><span class="dk2">Интерьер</span><span class="dv">Sport Platinum, чёрная кожа, 3 ряда</span></div><div class="dr"><span class="dk2">Экраны</span><span class="dv">38" OLED + 2 задних 12.6" + центр. 7"</span></div><div class="dr"><span class="dk2">Состояние</span><span class="dv">Не битый · 1 владелец</span></div></div>
+      </div><div class="car-foot"><div><div class="car-pr">20 450 000 <span>₽</span></div><div class="car-pn">Включая все расходы по ввозу в РФ</div></div><a href="#contact" class="btn-buy">Купить</a></div></div>
+    </div>
+
+    <div class="car rv">
+      <div class="car-gal"><img class="car-main" src="imgs/e_0.jpg" id="eMain" onclick="lb('e',0)" alt="E300" loading="lazy"><div class="car-thumbs"><div class="th act" onclick="sw('e',0,this)"><img src="imgs/e_0.jpg" loading="lazy"></div>
+<div class="th" onclick="sw('e',1,this)"><img src="imgs/e_1.jpg" loading="lazy"></div>
+<div class="th" onclick="sw('e',2,this)"><img src="imgs/e_2.jpg" loading="lazy"></div>
+<div class="th" onclick="sw('e',3,this)"><img src="imgs/e_3.jpg" loading="lazy"></div>
+<div class="th" onclick="sw('e',4,this)"><img src="imgs/e_4.jpg" loading="lazy"></div>
+<div class="th-more" onclick="lb('e',5)">+14</div></div></div>
+      <div class="car-body"><div>
+        <div class="car-bgs"><span class="cbg cbg-hot">В наличии</span><span class="cbg">2025 · 1 км</span><span class="cbg">AMG Line</span><span class="cbg">Из Кореи</span></div>
+        <div class="car-brand">Mercedes-Benz</div><div class="car-name">E300 AMG Line</div>
+        <div class="car-sub">W214 · Задний привод · EQ Boost · Электронный ПТС</div>
+        <div class="car-specs"><div class="sp"><div class="spv">258</div><div class="spk">Л.с.</div></div><div class="sp"><div class="spv">2.0л</div><div class="spk">Двиг.</div></div><div class="sp"><div class="spv">6.2с</div><div class="spk">0–100</div></div><div class="sp"><div class="spv">9G-AT</div><div class="spk">КПП</div></div><div class="sp"><div class="spv">RWD</div><div class="spk">Привод</div></div></div>
+        <div class="car-det"><div class="dr"><span class="dk2">Поколение</span><span class="dv">W214 (2023–н.в.)</span></div><div class="dr"><span class="dk2">Кузов</span><span class="dv">Седан, 4 двери, 5 мест</span></div><div class="dr"><span class="dk2">Интерьер</span><span class="dv">Белая натуральная кожа Premium</span></div><div class="dr"><span class="dk2">Состояние</span><span class="dv">Не битый · 1 владелец</span></div></div>
+      </div><div class="car-foot"><div><div class="car-pr">9 100 000 <span>₽</span></div><div class="car-pn">Включая все расходы по ввозу в РФ</div></div><a href="#contact" class="btn-buy">Купить</a></div></div>
+    </div>
+
+    <div class="car rv">
+      <div class="car-gal"><img class="car-main" src="imgs/glc2_0.jpg" id="glc2Main" onclick="lb('glc2',0)" alt="GLC 300 Coupé" loading="lazy"><div class="car-thumbs"><div class="th act" onclick="sw('glc2',0,this)"><img src="imgs/glc2_0.jpg" loading="lazy"></div>
+<div class="th" onclick="sw('glc2',1,this)"><img src="imgs/glc2_1.jpg" loading="lazy"></div>
+<div class="th" onclick="sw('glc2',2,this)"><img src="imgs/glc2_2.jpg" loading="lazy"></div>
+<div class="th" onclick="sw('glc2',3,this)"><img src="imgs/glc2_3.jpg" loading="lazy"></div>
+<div class="th" onclick="sw('glc2',4,this)"><img src="imgs/glc2_4.jpg" loading="lazy"></div>
+<div class="th-more" onclick="lb('glc2',5)">+13</div></div></div>
+      <div class="car-body"><div>
+        <div class="car-bgs"><span class="cbg cbg-hot">В наличии</span><span class="cbg">2024 · Новый</span><span class="cbg">AMG Line</span><span class="cbg">4MATIC</span></div>
+        <div class="car-brand">Mercedes-Benz</div><div class="car-name">GLC 300 Coupé 4MATIC</div>
+        <div class="car-sub">X254 · Полный привод · AMG Line · Электронный ПТС</div>
+        <div class="car-specs"><div class="sp"><div class="spv">258</div><div class="spk">Л.с.</div></div><div class="sp"><div class="spv">2.0л</div><div class="spk">Двиг.</div></div><div class="sp"><div class="spv">5.9с</div><div class="spk">0–100</div></div><div class="sp"><div class="spv">9G-AT</div><div class="spk">КПП</div></div><div class="sp"><div class="spv">4WD</div><div class="spk">Привод</div></div></div>
+        <div class="car-det"><div class="dr"><span class="dk2">Поколение</span><span class="dv">X254 (2022–н.в.)</span></div><div class="dr"><span class="dk2">Кузов</span><span class="dv">Купе-кроссовер, 5 дверей, 5 мест</span></div><div class="dr"><span class="dk2">Интерьер</span><span class="dv">Кожа Sienna Brown / чёрный алькантара</span></div><div class="dr"><span class="dk2">Экраны</span><span class="dv">MBUX 11.9" + цифровые приборы 12.3"</span></div><div class="dr"><span class="dk2">Состояние</span><span class="dv">Не битый · 0 владельцев</span></div></div>
+      </div><div class="car-foot"><div><div class="car-pr">9 500 000 <span>₽</span></div><div class="car-pn">Включая все расходы по доставке в РФ</div></div><a href="#contact" class="btn-buy">Купить</a></div></div>
+    </div>
+
+  </div>
+</section>
+
+<section class="sec sec-c0" id="why">
+  <div class="sh"><div class="sec-ey">Почему Premium Auto Moscow</div><h2 class="sec-t">Шесть причин <em>доверять нам</em></h2></div>
+  <div class="why-grid">
+    <div class="wc rv"><div class="wn">01</div><div class="wt">Прямой привоз из Кореи</div><p class="wp">Работаем без посредников напрямую с официальными корейскими дилерами. Все автомобили с оригинальными документами и полной историей обслуживания.</p></div>
+    <div class="wc rv"><div class="wn">02</div><div class="wt">Юридическая чистота</div><p class="wp">Каждый автомобиль проходит проверку на залоги, аресты и ограничения. Предоставляем детальный отчёт до сделки. Таможенное оформление под ключ.</p></div>
+    <div class="wc rv"><div class="wn">03</div><div class="wt">Электронный ПТС</div><p class="wp">Все автомобили поставляются с российским электронным ПТС. Первый владелец на территории РФ — именно вы. Полная прозрачность документов.</p></div>
+    <div class="wc rv"><div class="wn">04</div><div class="wt">Личный менеджер</div><p class="wp">Один специалист ведёт вас от первого звонка до передачи ключей. Всегда на связи — без переключений между отделами.</p></div>
+    <div class="wc rv"><div class="wn">05</div><div class="wt">Прозрачные цены</div><p class="wp">Цена, которую называем — финальная. Никаких скрытых сборов. Все расходы по ввозу уже включены в стоимость.</p></div>
+    <div class="wc rv"><div class="wn">06</div><div class="wt">Доставка по России</div><p class="wp">Доставляем в любой город страны с полным страхованием. Опыт доставок от Калининграда до Владивостока.</p></div>
+  </div>
+</section>
+
+<div class="order-sec" id="order">
+  <div>
+    <div class="ob-ey">Под заказ · Любая марка</div>
+    <h2 class="ob-h">Привезём любой<br><em>автомобиль из Кореи</em></h2>
+    <p class="ob-p">Нет нужного в наличии? Закажите под себя. Привозим любые марки из Кореи, Японии и Европы: Lamborghini, Ferrari, Porsche, BMW M, Mercedes-AMG, Bentley, Rolls-Royce. Полное сопровождение под ключ.</p>
+  </div>
+  <div class="ob-r">
+    <div class="ob-pts">
+      <div class="ob-pt"><div class="ob-dash"></div>Любая марка и модель</div>
+      <div class="ob-pt"><div class="ob-dash"></div>Оригиналы с мирового рынка</div>
+      <div class="ob-pt"><div class="ob-dash"></div>Электронный ПТС, 0 владельцев</div>
+      <div class="ob-pt"><div class="ob-dash"></div>Таможенное оформление под ключ</div>
+      <div class="ob-pt"><div class="ob-dash"></div>Срок поставки — от 4 недель</div>
+    </div>
+    <a href="https://wa.me/79261111170?text=Хочу заказать автомобиль" class="btn-g">Заказать из Кореи</a>
+  </div>
+</div>
+
+<div class="soc-bar">
+  <div><div class="soc-ey">Следите за новинками</div><div class="soc-t">Новые автомобили каждую неделю</div></div>
+  <div class="soc-btns">
+    <a href="https://www.instagram.com/premium_auto.ru" target="_blank" class="soc-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>Instagram</a>
+    <a href="https://t.me/premium_auto1" target="_blank" class="soc-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 5L2 12.5l7 1M21 5l-5 15-4.5-7.5M21 5L9 13.5m0 0L11.5 20"/></svg>Telegram</a>
+    <a href="https://wa.me/79261111170" class="soc-btn soc-btn-m">WhatsApp</a>
+  </div>
+</div>
+
+<section class="sec sec-c0" id="contact">
+  <div class="sh"><div class="sec-ey">Свяжитесь с нами</div><h2 class="sec-t">Позвоните или <em>напишите</em></h2></div>
+  <div class="contact-grid">
+    <div>
+      <div style="margin-bottom:30px"><span class="c-lbl">Телефон / WhatsApp</span><div class="c-val"><a href="tel:+79261111170">+7 (926) 111-11-70</a></div></div>
+      <div style="margin-bottom:36px"><span class="c-lbl">Адрес</span><div class="c-val" style="font-size:23px">г. Москва,<br>ул. Василисы Кожиной, 13</div><div class="c-hrs">Пн–Пт: 09:00 — 21:00<br>Сб–Вс: 10:00 — 20:00<br>Онлайн: 24/7</div></div>
+      <a href="https://wa.me/79261111170" class="btn-g">Написать в WhatsApp</a>
+    </div>
+    <div>
+      <div class="fg"><label>Ваше имя</label><input type="text" placeholder="Александр Иванов"></div>
+      <div class="fg-row">
+        <div class="fg"><label>Телефон</label><input type="tel" placeholder="+7 (___) ___-__-__"></div>
+        <div class="fg"><label>Интерес</label><select><option>Mercedes GLC 43 AMG 2025</option><option>Cadillac Escalade 600 2026</option><option>Mercedes E300 AMG Line 2025</option><option>Mercedes GLC 300 Coupé 2024</option><option>Lamborghini (под заказ)</option><option>Porsche (под заказ)</option><option>Ferrari (под заказ)</option><option>BMW M-серия (под заказ)</option><option>Bentley / Rolls-Royce</option><option>Другой автомобиль</option></select></div>
+      </div>
+      <div class="fg"><label>Комментарий</label><textarea placeholder="Напишите марку, модель, бюджет или любой вопрос..."></textarea></div>
+      <button class="btn-sub" id="sendBtn" onclick="sendForm()">Отправить заявку</button>
+      <p class="f-note">Отвечаем в течение 15 минут. Нажимая кнопку, вы соглашаетесь с обработкой персональных данных (ФЗ-152)</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="ft-grid">
+    <div><div class="ft-badge"><svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="7" stroke="currentColor" stroke-width="1" fill="none"/><circle cx="24" cy="24" r="2" fill="currentColor"/><line x1="24" y1="2" x2="24" y2="17" stroke="currentColor" stroke-width=".9"/><line x1="38" y1="10" x2="29" y2="19" stroke="currentColor" stroke-width=".9"/><line x1="46" y1="24" x2="31" y2="24" stroke="currentColor" stroke-width=".9"/><line x1="38" y1="38" x2="29" y2="29" stroke="currentColor" stroke-width=".9"/><line x1="24" y1="46" x2="24" y2="31" stroke="currentColor" stroke-width=".9"/><line x1="10" y1="38" x2="19" y2="29" stroke="currentColor" stroke-width=".9"/><line x1="2" y1="24" x2="17" y2="24" stroke="currentColor" stroke-width=".9"/><line x1="10" y1="10" x2="19" y2="19" stroke="currentColor" stroke-width=".9"/><circle cx="24" cy="2" r="1.2" fill="currentColor" opacity=".5"/><circle cx="38" cy="10" r="1.2" fill="currentColor" opacity=".5"/><circle cx="46" cy="24" r="1.2" fill="currentColor" opacity=".5"/><circle cx="38" cy="38" r="1.2" fill="currentColor" opacity=".5"/><circle cx="24" cy="46" r="1.2" fill="currentColor" opacity=".5"/><circle cx="10" cy="38" r="1.2" fill="currentColor" opacity=".5"/><circle cx="2" cy="24" r="1.2" fill="currentColor" opacity=".5"/><circle cx="10" cy="10" r="1.2" fill="currentColor" opacity=".5"/></svg></div><div class="ft-name">Premium Auto</div><div class="ft-sub">Moscow</div><p class="ft-desc">Привозим премиальные и спортивные автомобили из Кореи и Европы. Mercedes-Benz, Porsche, Lamborghini — напрямую, без посредников.</p></div>
+    <div><div class="ft-h">В наличии</div><ul class="ft-ul"><li><a href="#catalog">Mercedes GLC 43 AMG 2025</a></li><li><a href="#catalog">Cadillac Escalade 600 2026</a></li><li><a href="#catalog">Mercedes E300 AMG Line 2025</a></li><li><a href="#catalog">Mercedes GLC 300 Coupé 2024</a></li></ul></div>
+    <div><div class="ft-h">Под заказ</div><ul class="ft-ul"><li><a href="#order">Lamborghini</a></li><li><a href="#order">Porsche</a></li><li><a href="#order">Ferrari</a></li><li><a href="#order">BMW M-серия</a></li><li><a href="#order">Bentley · Rolls-Royce</a></li><li><a href="#order">Любая марка</a></li></ul></div>
+    <div><div class="ft-h">Контакты</div><ul class="ft-ul"><li><a href="tel:+79261111170">+7 (926) 111-11-70</a></li><li><a href="https://wa.me/79261111170">WhatsApp</a></li><li><a href="https://t.me/premium_auto1">Telegram</a></li><li><a href="https://www.instagram.com/premium_auto.ru">Instagram</a></li><li><a href="#contact">ул. Василисы Кожиной, 13</a></li></ul></div>
+  </div>
+  <div class="ft-bot"><span>© 2025 Premium Auto Moscow. Все права защищены.</span><span>Москва · ул. Василисы Кожиной, 13</span></div>
+</footer>
+
+<div class="lb" id="lb" onclick="if(event.target===this)lbClose()">
+  <button class="lb-x" onclick="lbClose()">Закрыть</button>
+  <button class="lb-p" onclick="lbPrev()">&#8249;</button>
+  <img class="lb-img" id="lbImg" src="" alt="">
+  <button class="lb-n" onclick="lbNext()">&#8250;</button>
+  <div class="lb-cnt" id="lbCnt"></div>
+  <div class="lb-thumbs" id="lbThumbs"></div>
+</div>
+
+<script>
+window.addEventListener('load', function() {
+  setTimeout(function() { document.getElementById('intro').classList.add('gone'); }, 2700);
+});
+window.addEventListener('scroll', function() {
+  document.getElementById('nav').classList.toggle('sc', window.scrollY > 70);
+}, {passive: true});
+function toggleMenu() {
+  document.getElementById('navDrawer').classList.toggle('open');
+}
+document.addEventListener('click', function(e) {
+  var d = document.getElementById('navDrawer');
+  var n = document.getElementById('nav');
+  if (d.classList.contains('open') && !n.contains(e.target) && !d.contains(e.target)) {
+    d.classList.remove('open');
+  }
+});
+function brScroll(dir) {
+  document.getElementById('brTrack').scrollBy({ left: dir * 280, behavior: 'smooth' });
+}
+var IMGS = {
+  glc:  ["imgs/glc_0.jpg","imgs/glc_1.jpg","imgs/glc_2.jpg","imgs/glc_3.jpg","imgs/glc_4.jpg","imgs/glc_5.jpg","imgs/glc_6.jpg","imgs/glc_7.jpg"],
+  esc:  ["imgs/esc_0.jpg","imgs/esc_1.jpg","imgs/esc_2.jpg","imgs/esc_3.jpg","imgs/esc_4.jpg","imgs/esc_5.jpg","imgs/esc_6.jpg","imgs/esc_7.jpg","imgs/esc_8.jpg","imgs/esc_9.jpg","imgs/esc_10.jpg","imgs/esc_11.jpg","imgs/esc_12.jpg","imgs/esc_13.jpg","imgs/esc_14.jpg","imgs/esc_15.jpg","imgs/esc_16.jpg","imgs/esc_17.jpg","imgs/esc_18.jpg","imgs/esc_19.jpg"],
+  e:    ["imgs/e_0.jpg","imgs/e_1.jpg","imgs/e_2.jpg","imgs/e_3.jpg","imgs/e_4.jpg","imgs/e_5.jpg","imgs/e_6.jpg","imgs/e_7.jpg","imgs/e_8.jpg","imgs/e_9.jpg","imgs/e_10.jpg","imgs/e_11.jpg","imgs/e_12.jpg","imgs/e_13.jpg","imgs/e_14.jpg","imgs/e_15.jpg","imgs/e_16.jpg","imgs/e_17.jpg","imgs/e_18.jpg"],
+  glc2: ["imgs/glc2_0.jpg","imgs/glc2_1.jpg","imgs/glc2_2.jpg","imgs/glc2_3.jpg","imgs/glc2_4.jpg","imgs/glc2_5.jpg","imgs/glc2_6.jpg","imgs/glc2_7.jpg","imgs/glc2_8.jpg","imgs/glc2_9.jpg","imgs/glc2_10.jpg","imgs/glc2_11.jpg","imgs/glc2_12.jpg","imgs/glc2_13.jpg","imgs/glc2_14.jpg","imgs/glc2_15.jpg","imgs/glc2_16.jpg","imgs/glc2_17.jpg"]
+};
+var MAINS = { glc: 'glcMain', esc: 'escMain', e: 'eMain', glc2: 'glc2Main' };
+function sw(car, idx, el) {
+  document.getElementById(MAINS[car]).src = IMGS[car][idx];
+  el.closest('.car-thumbs').querySelectorAll('.th').forEach(function(t) { t.classList.remove('act'); });
+  el.classList.add('act');
+}
+var lbCar = 'glc', lbIdx = 0;
+function lb(car, idx) { lbCar = car; lbIdx = idx; lbR(); document.getElementById('lb').classList.add('open'); document.body.style.overflow = 'hidden'; }
+function lbR() {
+  var s = IMGS[lbCar];
+  document.getElementById('lbImg').src = s[lbIdx];
+  document.getElementById('lbCnt').textContent = (lbIdx + 1) + ' / ' + s.length;
+  var tc = document.getElementById('lbThumbs');
+  tc.innerHTML = s.map(function(x, i) { return '<img class="lb-th' + (i === lbIdx ? ' act' : '') + '" src="' + x + '" onclick="lbG(' + i + ')">'; }).join('');
+  var act = tc.querySelector('.act');
+  if (act) act.scrollIntoView({ block: 'nearest', inline: 'center' });
+}
+function lbG(i) { lbIdx = i; lbR(); }
+function lbNext() { lbIdx = (lbIdx + 1) % IMGS[lbCar].length; lbR(); }
+function lbPrev() { lbIdx = (lbIdx - 1 + IMGS[lbCar].length) % IMGS[lbCar].length; lbR(); }
+function lbClose() { document.getElementById('lb').classList.remove('open'); document.body.style.overflow = ''; }
+document.addEventListener('keydown', function(e) {
+  if (!document.getElementById('lb').classList.contains('open')) return;
+  if (e.key === 'Escape') lbClose();
+  if (e.key === 'ArrowRight') lbNext();
+  if (e.key === 'ArrowLeft') lbPrev();
+});
+function sendForm() {
+  var b = document.getElementById('sendBtn');
+  b.textContent = 'Заявка принята — ответим за 15 минут';
+  b.style.background = 'var(--ga)';
+  setTimeout(function() { b.textContent = 'Отправить заявку'; b.style.background = ''; }, 4000);
+}
+var obs = new IntersectionObserver(function(entries) {
+  entries.forEach(function(e) {
+    if (e.isIntersecting) { e.target.classList.add('vis'); obs.unobserve(e.target); }
+  });
+}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.rv').forEach(function(el) { obs.observe(el); });
+</script>
+</body>
+</html>
